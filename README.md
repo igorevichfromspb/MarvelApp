@@ -1,6 +1,8 @@
-Marvel Information Portal
+# Marvel Information Portal
 
-Используемые технологии:
+### Используемые технологии:
 
-1. React
-2. Bootstrap
+- React
+- Bootstrap
+
+## Ссылка на [сайт](https://marvelinformationportal.herokuapp.com/)
