@@ -11,7 +11,7 @@ class CharList extends Component {
     loading: true,
     error: false,
     newItemLoading: false,
-    offset: 1560,
+    offset: 210,
     charEnded: false,
   };
 
@@ -39,7 +39,7 @@ class CharList extends Component {
       charList: [...charList, ...newCharList],
       loading: false,
       newItemLoading: false,
-      offset: 210 + 9,
+      offset: offset + 9,
       charEnded: ended,
     }));
   };
@@ -57,8 +57,22 @@ class CharList extends Component {
     });
   };
 
+  itemsRef = [];
+
+  setRef = (ref) => {
+    this.itemsRef.push(ref);
+  };
+
+  focusOnItem = (id) => {
+    this.itemsRef.forEach((item) =>
+      item.classList.remove("char__item_selected")
+    );
+    this.itemsRef[id].classList.add("char__item_selected");
+    this.itemsRef[id].focus();
+  };
+
   renderItems(arr) {
-    const items = arr.map((item) => {
+    const items = arr.map((item, i) => {
       let imgStyle = { objectFit: "cover" };
       if (
         item.thumbnail ===
@@ -69,8 +83,18 @@ class CharList extends Component {
       return (
         <li
           className="char__item"
+          ref={this.setRef}
           key={item.id}
-          onClick={() => this.props.onCharSelected(item.id)}
+          onClick={() => {
+            this.props.onCharSelected(item.id);
+            this.focusOnItem(i);
+          }}
+          onKeyPress={(e) => {
+            if (e.key === " " || e.key === "Enter") {
+              this.props.onCharSelected(item.id);
+              this.focusOnItem(i);
+            }
+          }}
         >
           <img src={item.thumbnail} alt={item.name} style={imgStyle} />
           <div className="char__name">{item.name}</div>
